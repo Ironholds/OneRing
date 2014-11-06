@@ -10,6 +10,14 @@ OneRing <- function(date){
   data <- geo_handler(data)
   
   #Generate useful referers
-  data$referer <- referer_handler(data$referer)
+  data$referer <- host_handler(data$referer)
   
+  #Categorise and tag requests
+  data <- tag_handler(data)
+  
+  #Aggregate
+  data <- data[,j = list(pageviews = (.N*1000)), by = names(data)]
+  
+  #Return
+  return(data)
 }

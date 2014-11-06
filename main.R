@@ -15,7 +15,7 @@ main <- function(){
     
     #Otherwise, run for all files.
     filelist <- list.files("/a/squid/archive/sampled/", full.names = TRUE, pattern = "gz$")
-    results <- do.call("rbind", parlapply(X = filelist, FUN = OneRing))
+    results <- do.call("rbind",parlapply(X = filelist, FUN = OneRing))
     
   }
 }
