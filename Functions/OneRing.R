@@ -18,6 +18,9 @@ OneRing <- function(date){
   #Aggregate
   data <- data[,j = list(pageviews = (.N*1000)), by = names(data)]
   
+  #Print
+  cat(".")
+  
   #Return
   return(data)
 }

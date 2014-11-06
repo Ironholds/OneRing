@@ -1,7 +1,7 @@
 project_handler <- function(urls){
   
-  #Limit to hostname
-  urls <- host_handler(urls, strict = FALSE)
+  #Iconv
+  urls <- iconv(urls, to = "UTF-8")
   
   #Split and filter
   urls <- unlist(lapply(strsplit(x = urls, split = ".", fixed = TRUE), function(x){
@@ -21,6 +21,8 @@ project_handler <- function(urls){
     
   }))
   
+  #Substitute
+  urls <- gsub(x = urls, pattern = "http(s)?://", useBytes = TRUE, perl = TRUE, replacement = "")
   #Return
   return(urls)
 }
