@@ -17,7 +17,6 @@ mcc_handler <- function(x_analytics){
     return("NA")
   }))
   
-  
   #Return
   return(results)
 }
