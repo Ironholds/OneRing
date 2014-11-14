@@ -5,17 +5,17 @@ ignore <- lapply(list.files(file.path(getwd(),"Functions"), full.names = TRUE),
 
 main <- function(){
   
-  #Has it run before?
-  if(mysql_exists(db = SAVE_DB, table_name = SAVE_TABLE)){
-    
-    #If so, just run for today's file
-    results <- OneRing(date = to_mw(Sys.Date()))
-    
-  } else {
-    
-    #Otherwise, run for all files.
-    filelist <- list.files("/a/squid/archive/sampled/", full.names = TRUE, pattern = "gz$")
-    results <- do.call("rbind",parlapply(X = filelist, FUN = OneRing))
-    
-  }
+  #Otherwise, run for all files.
+  filelist <- list.files("/a/squid/archive/sampled", full.names = TRUE, pattern = "gz$")
+  results <- do.call("rbind",parlapply(X = filelist, FUN = OneRing))
+  
+  #Aggregate
+  results <- results[,j = list(pageviews = sum(pageviews)), by = names(results)[!names(results) == "pageviews"]]
+  
+  #Write
+  mysql_write(results, SAVE_DB, SAVE_TABLE)
 }
+
+#Run, quit
+main()
+q()

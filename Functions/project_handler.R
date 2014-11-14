@@ -12,8 +12,13 @@ project_handler <- function(urls){
     }
     
     #Mobile? Return the first and third entries
-    if(x[2] == "m"){
+    if(x[2] %in% c("m","wap","zero","mobile")){
       return(paste(x[c(1,3)],collapse = "."))
+    }
+    
+    #No language code?
+    if(grepl(x = x[2], pattern = "org", fixed = TRUE)){
+      return("Unknown")
     }
     
     #Otherwise, first and second
@@ -23,6 +28,7 @@ project_handler <- function(urls){
   
   #Substitute
   urls <- gsub(x = urls, pattern = "http(s)?://", useBytes = TRUE, perl = TRUE, replacement = "")
+  
   #Return
   return(urls)
 }
